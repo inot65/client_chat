@@ -28,7 +28,7 @@ const Login = () => {
       // il inregistrez direct , fara context, pt ca nu vrea sa-l inregistreze
       // direct in contex pe userul nou creat
       try {
-        await axios.post('auth/register', user);
+        await axios.post(`${process.env.REACT_APP_API_URL}auth/register`, user);
         // console.log('User creat: ', res.data);
         // fac redirectarea la pagina de login
         return navigate('/login');

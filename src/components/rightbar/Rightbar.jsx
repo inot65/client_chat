@@ -44,7 +44,9 @@ const Rightbar = ({userTransmis}) => {
       try {
         if (user._id) {
           const res = await axios.get(
-            `/users/friends/${user._id ? user._id : currentUser._id}`
+            `${process.env.REACT_APP_API_URL}users/friends/${
+              user._id ? user._id : currentUser._id
+            }`
           );
           setFriends(res.data);
         }
@@ -61,15 +63,21 @@ const Rightbar = ({userTransmis}) => {
     try {
       if (followed) {
         //follow
-        await axios.put(`/users/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/users/${user._id}/unfollow`,
+          {
+            userId: currentUser._id,
+          }
+        );
         dispatch({type: 'UNFOLLOW', payload: user._id});
       } else {
         // unfollow
-        await axios.put(`/users/${user._id}/follow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/users/${user._id}/follow`,
+          {
+            userId: currentUser._id,
+          }
+        );
         dispatch({type: 'FOLLOW', payload: user._id});
       }
       setFollowed(!followed);

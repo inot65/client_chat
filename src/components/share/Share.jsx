@@ -48,7 +48,7 @@ const Share = () => {
       }
     }
     try {
-      await axios.post('/posts', newPost);
+      await axios.post(`${process.env.REACT_APP_API_URL}/posts`, newPost);
       console.log('Postare noua: ', newPost);
       window.location.reload();
     } catch (error) {

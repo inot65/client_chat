@@ -25,7 +25,11 @@ const Messenger = () => {
 
   // fac efect pentru a nu se reconecta de fiecare data cind se rerandeaza componenta
   useEffect(() => {
-    socket.current = io('ws://localhost:8900');
+    // asta e serverul local
+    // socket.current = io('ws://localhost:8900');
+    // asta e serverul remote
+    socket.current = io(`ws://${process.env.REACT_APP_SERVER_SOCKET}`);
+
     // fac un efect doar pentru receptie de mesaje de la severul socket
     socket.current.on('getMessage', (data) => {
       setArrivalMessages({
@@ -59,7 +63,9 @@ const Messenger = () => {
     try {
       // obtin toate conversatiile userului
       const getConversations = async () => {
-        const res = await axios.get(`conversations/${user._id}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}conversations/${user._id}`
+        );
         setConversations(res.data);
       };
       getConversations();
@@ -72,7 +78,9 @@ const Messenger = () => {
     // obtin toate mesajele din conversatie
     try {
       const getMessages = async () => {
-        const res = await axios.get(`messages/${currentChat?._id}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}messages/${currentChat?._id}`
+        );
         setMessages(res.data);
       };
       getMessages();
@@ -116,7 +124,10 @@ const Messenger = () => {
 
     try {
       // stochez mesajul
-      const res = await axios.post(`messages`, message);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}messages`,
+        message
+      );
       // actualizez mesajele
       setMessages([...messages, res.data]);
       setNewMessage('');

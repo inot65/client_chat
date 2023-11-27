@@ -11,7 +11,9 @@ const Message = ({message, own}) => {
     // obtin datele sender-ului
     try {
       const getUser = async () => {
-        const res = await axios.get(`users?userId=${message?.sender}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}users?userId=${message?.sender}`
+        );
         setUser(res.data);
       };
       getUser();

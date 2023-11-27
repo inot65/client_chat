@@ -11,7 +11,9 @@ const ChatOnline = ({onlineUsers, currentId, setCurrentChat}) => {
     try {
       // obtin toate conversatiile userului
       const getFriends = async () => {
-        const res = await axios.get(`users/friends/${currentId}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}users/friends/${currentId}`
+        );
         setFriends(res.data);
         // console.log(res.data);
       };
@@ -29,7 +31,7 @@ const ChatOnline = ({onlineUsers, currentId, setCurrentChat}) => {
   const handleClick = async (friend) => {
     try {
       const res = await axios.get(
-        `conversations/find/${currentId}/${friend._id}`
+        `${process.env.REACT_APP_API_URL}conversations/find/${currentId}/${friend._id}`
       );
       // setez noua conversatie curenta
       setCurrentChat(res.data);
