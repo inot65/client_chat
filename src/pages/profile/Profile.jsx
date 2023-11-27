@@ -37,7 +37,7 @@ const Profile = () => {
                 className='profileCoverImg'
                 src={
                   user.coverPicture
-                    ? PF + user.coverPicture
+                    ? user.coverPicture
                     : PF + 'person/noCover.png'
                 }
                 alt='Imagine de profil'
@@ -46,7 +46,7 @@ const Profile = () => {
                 className='profileUserImg'
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ? user.profilePicture
                     : PF + 'person/noAvatar.png'
                 }
                 alt='Poza de profil'

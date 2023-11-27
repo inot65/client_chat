@@ -15,6 +15,7 @@ const Share = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);
+  const [img, setImg] = useState(null);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -25,22 +26,29 @@ const Share = () => {
 
     if (file) {
       const data = new FormData();
-      const filename = Date.now() + file.name;
+      const filename = file.name;
       data.append('name', filename);
       data.append('file', file);
-      newPost.img = filename;
-      console.log(newPost);
+      data.append('api_key', `${process.env.REACT_APP_API_KEY}`);
+      data.append('upload_preset', 'upload');
 
       try {
-        //incarc fisierul
-        axios.post('/upload', data);
+        const uploadRes = await axios.post(
+          'https://api.cloudinary.com/v1_1/secunia_toni/image/upload',
+          data
+        );
+        // obtin url-ul unde s-a urcat imaginea pe cloudinary.com
+        newPost.img = uploadRes.data.url;
+        // memorez imaginea postarii
+        setImg(newPost.img);
+        console.log('Imagine postare: ', newPost.img);
       } catch (error) {
-        newPost.img = null;
-        console.log('Eroare incarcare fisier: ', error);
+        console.log('Eroare upload fisier: ', error);
       }
     }
     try {
       await axios.post('/posts', newPost);
+      console.log('Postare noua: ', newPost);
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -55,7 +63,7 @@ const Share = () => {
             className='shareProfileImg'
             src={
               user.profilePicture
-                ? PF + user.profilePicture
+                ? user.profilePicture
                 : PF + 'person/noavatar.png'
             }
             alt=''
@@ -69,8 +77,14 @@ const Share = () => {
         <hr className='shareHr' />
         {file && (
           <div className='shareImgContainer'>
-            <img src={URL.createObjectURL(file)} className='shareImg' alt='' />
-            <Cancel className='shareCancelImg' onClick={() => setFile(null)} />
+            <img src={img} className='shareImg' alt='Imagine postare' />
+            <Cancel
+              className='shareCancelImg'
+              onClick={() => {
+                setFile(null);
+                setImg(null);
+              }}
+            />
           </div>
         )}
         <form className='shareBottom' onSubmit={submitHandler}>
@@ -84,7 +98,7 @@ const Share = () => {
                 name=''
                 id='file'
                 className='shareInput'
-                accept='.png,.jpeg,.jpg'
+                accept='.png,.jpeg,.jpg,.webp'
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>

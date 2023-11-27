@@ -8,7 +8,7 @@ import {useContext} from 'react';
 import {AuthContext} from '../../context/AuthContext';
 
 const Topbar = () => {
-  const {user} = useContext(AuthContext);
+  const {user, dispatch} = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
@@ -58,7 +58,7 @@ const Topbar = () => {
                 ? user?.profilePicture
                 : PF + 'person/noAvatar.png'
             }
-            alt=''
+            alt='Poza de profil'
             className='topbarImg'
           />
           <span className='topbarUserName no-underline'>{user.username}</span>
@@ -67,6 +67,8 @@ const Topbar = () => {
           className='topbarLogout'
           onClick={() => {
             localStorage.removeItem('user');
+            dispatch({type: 'LOGOUT'});
+            window.location.replace('/');
           }}
         >
           Logout {user.username}

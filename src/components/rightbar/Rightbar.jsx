@@ -8,14 +8,9 @@ import {AuthContext} from '../../context/AuthContext';
 import {Add, Remove} from '@mui/icons-material';
 import {useParams} from 'react-router';
 
-const Rightbar = ({user_transmis}) => {
+const Rightbar = ({userTransmis}) => {
+  console.log('User transmis in Rightbar :', userTransmis);
   const {username} = useParams();
-  // console.log(
-  //   'Rightbar username din params: ',
-  //   username,
-  //   user_transmis,
-  //   useParams()
-  // );
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
@@ -97,7 +92,7 @@ const Rightbar = ({user_transmis}) => {
         <h4 className='rightbarTitle'>OnlineFriends</h4>
         <ul className='rightbarFriendList'>
           {friends.map((user) => (
-            <Online key={user.id} user={user} />
+            <Online key={user._id} user={user} />
           ))}
         </ul>
       </>
@@ -113,7 +108,7 @@ const Rightbar = ({user_transmis}) => {
             {!followed ? <Add /> : <Remove />}
           </button>
         )}
-        <h4 className='rightbarTitle'>User Information</h4>
+        <h4 className='rightbarTitle'>User Information [{user.username}]</h4>
         <div className='rightbarInfo'>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>City:</span>
@@ -164,7 +159,7 @@ const Rightbar = ({user_transmis}) => {
   return (
     <div className='rightbar'>
       <div className='rightbarWrapper'>
-        {user_transmis ? <ProfileRightbar /> : <HomeRightbar />}
+        {userTransmis !== '' ? <ProfileRightbar /> : <HomeRightbar />}
       </div>
     </div>
   );
