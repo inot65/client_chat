@@ -15,15 +15,16 @@ const Share = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);
-  const [img, setImg] = useState(null);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
     };
 
+    // console.log('newPost initial: ', newPost);
     if (file) {
       const data = new FormData();
       const filename = file.name;
@@ -33,15 +34,15 @@ const Share = () => {
       data.append('upload_preset', 'upload');
 
       try {
+        // console.log('Data incarcat pe Cloudinary :', data);
         const uploadRes = await axios.post(
           'https://api.cloudinary.com/v1_1/secunia_toni/image/upload',
           data
         );
+        // console.log('Rezultat incarcare imagine :', uploadRes);
         // obtin url-ul unde s-a urcat imaginea pe cloudinary.com
         newPost.img = uploadRes.data.url;
-        // memorez imaginea postarii
-        setImg(newPost.img);
-        console.log('Imagine postare: ', newPost.img);
+        // console.log('Imagine postare: ', newPost.img);
       } catch (error) {
         console.log('Eroare upload fisier: ', error);
       }
@@ -62,8 +63,10 @@ const Share = () => {
           <img
             className='shareProfileImg'
             src={
-              user.profilePicture
-                ? user.profilePicture
+              user?.profilePicture
+                ? user?.profilePicture.includes('cloudinary')
+                  ? user.profilePicture
+                  : PF + user.profilePicture
                 : PF + 'person/noavatar.png'
             }
             alt=''
@@ -77,12 +80,11 @@ const Share = () => {
         <hr className='shareHr' />
         {file && (
           <div className='shareImgContainer'>
-            <img src={img} className='shareImg' alt='Imagine postare' />
+            <img src={URL.createObjectURL(file)} className='shareImg' alt='' />
             <Cancel
               className='shareCancelImg'
               onClick={() => {
                 setFile(null);
-                setImg(null);
               }}
             />
           </div>

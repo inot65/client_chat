@@ -9,7 +9,6 @@ import {Add, Remove} from '@mui/icons-material';
 import {useParams} from 'react-router';
 
 const Rightbar = ({userTransmis}) => {
-  console.log('User transmis in Rightbar :', userTransmis);
   const {username} = useParams();
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -140,8 +139,10 @@ const Rightbar = ({userTransmis}) => {
               <div className='rightbarFollowing'>
                 <img
                   src={
-                    friend.profilePicture
-                      ? PF + friend.profilePicture
+                    friend?.profilePicture
+                      ? friend.profilePicture?.includes('cloudinary')
+                        ? friend?.profilePicture
+                        : PF + friend?.profilePicture
                       : PF + 'person/noAvatar.png'
                   }
                   alt=''

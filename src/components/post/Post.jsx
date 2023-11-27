@@ -51,8 +51,10 @@ const Post = ({post}) => {
               <img
                 className='postProfileImg'
                 src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
+                  user?.profilePicture
+                    ? user.profilePicture?.includes('cloudinary')
+                      ? user?.profilePicture
+                      : PF + user?.profilePicture
                     : PF + 'person/noavatar.png'
                 }
                 alt='Poza de profil'
@@ -67,20 +69,24 @@ const Post = ({post}) => {
         </div>
         <div className='postCenter'>
           <span className='postText'>{post?.desc}</span>
-          {post?.img && <img className='postImg' src={PF + post.img} alt='' />}
+          {post?.img && post.img?.includes('cloudinary') ? (
+            <img className='postImg' src={post?.img} alt='' />
+          ) : (
+            post?.img && <img className='postImg' src={PF + post?.img} alt='' />
+          )}
         </div>
         <div className='postBottom'>
           <div className='postBottomLeft'>
             <img
               className='likeIcon'
               src={PF + 'like.png'}
-              alt=''
+              alt='Like'
               onClick={handleLike}
             />
             <img
               className='likeIcon'
               src={PF + 'heart.png'}
-              alt=''
+              alt='Heart'
               onClick={handleLike}
             />
             <span className='postLikeCounter'>{`${
@@ -89,7 +95,7 @@ const Post = ({post}) => {
           </div>
           <div className='postBottomRight'>
             <span className='postCommentText'>{`${
-              post.comment ? post.comment : 0
+              post?.comment ? post.comment : 0
             } comments`}</span>
           </div>
         </div>

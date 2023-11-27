@@ -36,8 +36,10 @@ const Profile = () => {
               <img
                 className='profileCoverImg'
                 src={
-                  user.coverPicture
-                    ? user.coverPicture
+                  user?.coverPicture
+                    ? user.coverPicture?.includes('cloudinary')
+                      ? user?.coverPicture
+                      : PF + user?.coverPicture
                     : PF + 'person/noCover.png'
                 }
                 alt='Imagine de profil'
@@ -45,8 +47,10 @@ const Profile = () => {
               <img
                 className='profileUserImg'
                 src={
-                  user.profilePicture
-                    ? user.profilePicture
+                  user?.profilePicture
+                    ? user.profilePicture?.includes('cloudinary')
+                      ? user?.profilePicture
+                      : PF + user?.profilePicture
                     : PF + 'person/noAvatar.png'
                 }
                 alt='Poza de profil'
