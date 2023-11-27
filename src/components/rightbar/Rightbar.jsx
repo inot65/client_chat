@@ -27,7 +27,9 @@ const Rightbar = ({userTransmis}) => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          `/users?username=${username ? username : currentUser.username}`
+          `${process.env.REACT_APP_API_URL}users?username=${
+            username ? username : currentUser.username
+          }`
         );
         setUser(res.data);
       } catch (error) {
@@ -64,7 +66,7 @@ const Rightbar = ({userTransmis}) => {
       if (followed) {
         //follow
         await axios.put(
-          `${process.env.REACT_APP_API_URL}/users/${user._id}/unfollow`,
+          `${process.env.REACT_APP_API_URL}users/${user._id}/unfollow`,
           {
             userId: currentUser._id,
           }
@@ -73,7 +75,7 @@ const Rightbar = ({userTransmis}) => {
       } else {
         // unfollow
         await axios.put(
-          `${process.env.REACT_APP_API_URL}/users/${user._id}/follow`,
+          `${process.env.REACT_APP_API_URL}users/${user._id}/follow`,
           {
             userId: currentUser._id,
           }

@@ -15,7 +15,9 @@ const Conversation = ({conversation, currentUserId}) => {
     try {
       // obtin toate conversatiile userului
       const getUser = async () => {
-        const res = await axios.get(`users?userId=${friendId}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}users?userId=${friendId}`
+        );
         // console.log(res)
         setUser(res.data);
         // console.log('Prietenul este: ', res.data);
