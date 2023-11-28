@@ -36,7 +36,7 @@ const Post = ({post}) => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/users?userId=${post.userId}`
+          `${process.env.REACT_APP_API_URL}users?userId=${post.userId}`
         );
         setUser(res.data);
       } catch (error) {
@@ -57,9 +57,9 @@ const Post = ({post}) => {
                 src={
                   user?.profilePicture
                     ? user.profilePicture?.includes('cloudinary')
-                      ? user?.profilePicture
-                      : PF + user?.profilePicture
-                    : PF + 'person/noavatar.png'
+                      ? user.profilePicture
+                      : PF + user.profilePicture
+                    : PF + 'person/noAvatar.png'
                 }
                 alt='Poza de profil'
               />

@@ -28,7 +28,9 @@ const Messenger = () => {
     // asta e serverul local
     // socket.current = io('ws://localhost:8900');
     // asta e serverul remote
-    socket.current = io(`ws://${process.env.REACT_APP_SERVER_SOCKET}`);
+    socket.current = io(`${process.env.REACT_APP_SERVER_SOCKET}`);
+
+    console.log('Conectare la serverul socket.io :', socket.current);
 
     // fac un efect doar pentru receptie de mesaje de la severul socket
     socket.current.on('getMessage', (data) => {
@@ -38,7 +40,7 @@ const Messenger = () => {
         createdAt: Date.now(),
       });
     });
-  }, [socket, user._id]);
+  }, [socket, user]);
 
   //
   useEffect(() => {
