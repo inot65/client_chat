@@ -19,6 +19,14 @@
   height: 250px;
   object-fit: cover;
 }
+
+.profileShareOptions {
+  display: flex;
+  margin-left: 12px;
+  position: relative;
+}
+
+
 .profileUserImg {
   width: 150px;
   height: 150px;
@@ -31,6 +39,76 @@
   top: 150px;
   border: 3px solid white;
 }
+
+.profileShareCancelImg {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+  opacity: 0.7;
+  color: white;
+}
+
+
+.profileShareInput {
+  border: none;
+  width: 80%;
+}
+
+.profileShareInput:focus {
+  outline: none;
+}
+
+.profileForm{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.profileSaveBtn{
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: teal;
+  font-weight: 400;
+  color: whitesmoke;
+  margin: auto;
+  cursor: pointer;
+  font-size: 18px;
+}  
+
+.profileGroupInput{
+  /* width: 80%; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* align-content: space-around; */
+  margin-bottom: 10px;
+}
+
+.profileLabelInput{
+  width: 40%;
+  padding-right: 10px;
+  align-self: flex-start;
+}
+
+
+.profileInput, select {
+  width: 60%;
+  /* margin-left: 10px; */
+ font-size: 16px;
+ font-weight: 400;
+ border-radius: 4px;
+ align-self: flex-end;
+}
+
+.profileInput:focus {
+  outline: none;
+}
+
 .profileInfo {
   display: flex;
   flex-direction: column;

@@ -16,7 +16,7 @@ export const RegisterSuccess = (user) => ({
   type: 'REGISTER_SUCCESS',
   payload: user,
 });
-export const RegisternFailure = (error) => ({
+export const RegisterFailure = (error) => ({
   type: 'REGISTER_FAILURE',
   payload: error,
 });

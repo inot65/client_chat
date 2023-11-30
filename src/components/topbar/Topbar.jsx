@@ -4,12 +4,14 @@ import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {Link} from 'react-router-dom';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {AuthContext} from '../../context/AuthContext';
 
 const Topbar = () => {
   const {user, dispatch} = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {}, [user]);
 
   return (
     <div className='topbarContainer'>
@@ -66,9 +68,9 @@ const Topbar = () => {
         <button
           className='topbarLogout'
           onClick={() => {
+            window.location.replace('/');
             localStorage.removeItem('user');
             dispatch({type: 'LOGOUT'});
-            window.location.replace('/');
           }}
         >
           Logout {user.username}

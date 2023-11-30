@@ -8,7 +8,7 @@ import {AuthContext} from '../../context/AuthContext';
 import {Add, Remove} from '@mui/icons-material';
 import {useParams} from 'react-router';
 
-const Rightbar = ({userTransmis}) => {
+const Rightbar = ({profile}) => {
   const {username} = useParams();
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -36,11 +36,11 @@ const Rightbar = ({userTransmis}) => {
         console.log(error);
       }
     };
-    if (username) {
-      getUser();
-    }
+
+    getUser();
   }, [username, currentUser.username]);
 
+  // obtin prietenii
   useEffect(() => {
     const getFriends = async () => {
       try {
@@ -140,28 +140,34 @@ const Rightbar = ({userTransmis}) => {
         </div>
         <h4 className='rightbarTitle'>User Friends</h4>
         <div className='rightbarFollowings'>
-          {friends.map((friend) => (
-            <Link
-              key={friend._id}
-              to={'/profile/' + friend.username}
-              style={{textDecoration: 'none'}}
-            >
-              <div className='rightbarFollowing'>
-                <img
-                  src={
-                    friend?.profilePicture
-                      ? friend.profilePicture?.includes('cloudinary')
-                        ? friend?.profilePicture
-                        : PF + friend?.profilePicture
-                      : PF + 'person/noAvatar.png'
-                  }
-                  alt=''
-                  className='rightbarFollowingImg'
-                />
-                <span className='rightbarFollowinName'>{friend.username}</span>
-              </div>
-            </Link>
-          ))}
+          {friends.length > 0 ? (
+            friends.map((friend) => (
+              <Link
+                key={friend._id}
+                to={'/profile/' + friend.username}
+                style={{textDecoration: 'none'}}
+              >
+                <div className='rightbarFollowing'>
+                  <img
+                    src={
+                      friend?.profilePicture
+                        ? friend.profilePicture?.includes('cloudinary')
+                          ? friend?.profilePicture
+                          : PF + friend?.profilePicture
+                        : PF + 'person/noAvatar.png'
+                    }
+                    alt=''
+                    className='rightbarFollowingImg'
+                  />
+                  <span className='rightbarFollowinName'>
+                    {friend.username}
+                  </span>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <span className='rightbarFaraPrieteni'>Nu are prieteni</span>
+          )}
         </div>
       </>
     );
@@ -170,7 +176,7 @@ const Rightbar = ({userTransmis}) => {
   return (
     <div className='rightbar'>
       <div className='rightbarWrapper'>
-        {userTransmis !== '' ? <ProfileRightbar /> : <HomeRightbar />}
+        {profile ? <ProfileRightbar /> : <HomeRightbar />}
       </div>
     </div>
   );

@@ -1,13 +1,19 @@
-import {useRef} from 'react';
-import axios from 'axios';
+import {useRef, useContext} from 'react';
+// import axios from 'axios';
+import {registerCall} from '../../apiCalls';
 import {useNavigate} from 'react-router-dom';
+import {AuthContext} from '../../context/AuthContext';
+import CircularProgress from '@mui/material/CircularProgress';
 import './register.css';
 
-const Login = () => {
+const Register = () => {
   const username = useRef();
   const email = useRef();
   const password = useRef();
   const passwordAgain = useRef();
+
+  // obtin contextul
+  const {isFetching, error, dispatch} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -20,15 +26,19 @@ const Login = () => {
       password.current.setCustomValidity("Password don't match.");
     } else {
       // totul e OK, urmeaza inregistrarea noului user
-      const user = {
-        username: username.current.value,
-        email: email.current.value,
-        password: password.current.value,
-      };
+
       // il inregistrez direct , fara context, pt ca nu vrea sa-l inregistreze
-      // direct in contex pe userul nou creat
+      // direct in contex pe userul nou creat ???
       try {
-        await axios.post(`${process.env.REACT_APP_API_URL}auth/register`, user);
+        registerCall(
+          {
+            email: email.current.value,
+            password: password.current.value,
+            username: username.current.value,
+          },
+          dispatch
+        );
+        // await axios.post(`${process.env.REACT_APP_API_URL}auth/register`, user);
         // console.log('User creat: ', res.data);
         // fac redirectarea la pagina de login
         return navigate('/login');
@@ -38,11 +48,17 @@ const Login = () => {
     }
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    //  navigare catre pagina de 'Login'
+    return navigate('/login');
+  };
+
   return (
     <div className='register'>
       <div className='registerWrapper'>
         <div className='registerLeft'>
-          <h3 className='registerLogo'>ToniSocial</h3>
+          <h3 className='registerLogo'>ToniSocial - REGISTER</h3>
           <span className='registerDesc'>
             Connect with friends and the world around you on ToniSocial
           </span>
@@ -80,17 +96,34 @@ const Login = () => {
               minLength={6}
               required
             />
-            <button className='registerButton' type='submit'>
-              Sign Up
+            <button
+              className='registerButton'
+              type='submit'
+              disabled={isFetching}
+            >
+              {isFetching ? (
+                <CircularProgress color='inherit' size='20px' />
+              ) : (
+                'Sign Up'
+              )}
             </button>
-            <button className='registerRegisterButton'>
-              Log into your Account
+            <button
+              className='registerLoginButton'
+              disabled={isFetching}
+              onClick={handleLogin}
+            >
+              {isFetching ? (
+                <CircularProgress color='inherit' size='20px' />
+              ) : (
+                'Log into your Account'
+              )}
             </button>
           </form>
+          {error ? <span className='error'>Ceva nu e bine!</span> : null}
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
