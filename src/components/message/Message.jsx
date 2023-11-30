@@ -28,7 +28,11 @@ const Message = ({message, own}) => {
         <img
           className='messageImg'
           src={
-            user?.profilePict ? user.profilePicture : PF + 'person/noAvatar.png'
+            user?.profilePicture
+              ? user.profilePicture?.includes('cloudinary')
+                ? user.profilePicture
+                : PF + user.profilePicture
+              : PF + 'person/noAvatar.png'
           }
           alt=''
         />

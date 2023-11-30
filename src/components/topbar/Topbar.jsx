@@ -57,7 +57,9 @@ const Topbar = () => {
           <img
             src={
               user?.profilePicture
-                ? user?.profilePicture
+                ? user.profilePicture?.includes('cloudinary')
+                  ? user.profilePicture
+                  : PF + user.profilePicture
                 : PF + 'person/noAvatar.png'
             }
             alt='Poza de profil'

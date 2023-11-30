@@ -52,7 +52,11 @@ const ChatOnline = ({onlineUsers, currentId, setCurrentChat}) => {
           <div className='chatOnlineImgContainer'>
             <img
               src={
-                o?.profilePict ? o.profilePicture : PF + 'person/noAvatar.png'
+                o?.profilePicture
+                  ? o.profilePicture?.includes('cloudinary')
+                    ? o.profilePicture
+                    : PF + o.profilePicture
+                  : PF + 'person/noAvatar.png'
               }
               className='chatOnlineImg'
               alt=''

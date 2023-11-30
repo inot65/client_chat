@@ -32,8 +32,10 @@ const Conversation = ({conversation, currentUserId}) => {
     <div className='conversation'>
       <img
         src={
-          user?.profilePict
-            ? user.profilePicture
+          user?.profilePicture
+            ? user.profilePicture?.includes('cloudinary')
+              ? user.profilePicture
+              : PF + user.profilePicture
             : PF + 'person/noAvatar.png'
         }
         alt=''
