@@ -7,8 +7,10 @@ const Online = ({user}) => {
       <div className='onlineProfileImgContainer'>
         <img
           src={
-            user.profilePicture
-              ? user.profilePicture
+            user?.profilePicture
+              ? user.profilePicture?.includes('cloudinary')
+                ? user.profilePicture
+                : PF + user.profilePicture
               : PF + 'person/noAvatar.png'
           }
           alt='poza profil'
