@@ -7,7 +7,7 @@ const CloseFriend = ({user}) => {
       <img
         src={
           user?.profilePicture
-            ? user?.includes('cloudinary')
+            ? user?.profilePicture.includes('cloudinary')
               ? user.profilePicture
               : PF + user.profilePicture
             : PF + 'person/noAvatar.png'
