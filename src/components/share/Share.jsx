@@ -41,7 +41,7 @@ const Share = () => {
         );
         // console.log('Rezultat incarcare imagine :', uploadRes);
         // obtin url-ul unde s-a urcat imaginea pe cloudinary.com
-        newPost.img = uploadRes.data.url;
+        newPost.img = uploadRes.data.secure_url;
         // console.log('Imagine postare: ', newPost.img);
       } catch (error) {
         console.log('Eroare upload fisier: ', error);

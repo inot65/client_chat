@@ -68,7 +68,7 @@ const Profile = () => {
           data
         );
 
-        updatedUser.profilePicture = uploadRes.data.url;
+        updatedUser.profilePicture = uploadRes.data.secure_url;
       } catch (error) {
         console.log('Eroare upload imagine profil : ', error);
       }
@@ -87,7 +87,7 @@ const Profile = () => {
           data
         );
 
-        updatedUser.coverPicture = uploadRes.data.url;
+        updatedUser.coverPicture = uploadRes.data.secure_url;
       } catch (error) {
         console.log('Eroare upload imagine cover : ', error);
       }
