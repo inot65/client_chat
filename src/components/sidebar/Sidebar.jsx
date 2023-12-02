@@ -10,10 +10,30 @@ import {
   HelpOutline,
   WorkOutline,
 } from '@mui/icons-material';
-import {Users} from '../../dummyData.js';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
+// import {Users} from '../../dummyData.js';
 import CloseFriend from '../closeFriend/CloseFriend';
+import {useEffect, useState} from 'react';
 
 const Sidebar = () => {
+  const [users, setUsers] = useState([]);
+  // obtin prietenii
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}users/all`
+        );
+        setUsers(res.data.users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUsers();
+  }, []);
+
   return (
     <div className='sidebar'>
       <div className='sidebarWrapper'>
@@ -58,8 +78,14 @@ const Sidebar = () => {
         <button className='sidebarButton'>Arata mai mult</button>
         <hr className='sidebarHr' />
         <ul className='sidebarFriendList'>
-          {Users.map((user) => (
-            <CloseFriend key={user.id} user={user} />
+          {users.map((user) => (
+            <Link
+              key={user.id}
+              to={'/profile/' + user.username}
+              style={{textDecoration: 'none'}}
+            >
+              <CloseFriend user={user} />
+            </Link>
           ))}
         </ul>
       </div>
